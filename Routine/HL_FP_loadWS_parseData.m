@@ -68,10 +68,10 @@ In matlab, you can use the bitget() function to extract individual bits.
 %}
 if ~isempty(s.header.DIChannelNames)
     disp('Having DI channels, read in [only support 8 DI channels for now]')
-s.sweep_0001.digitalScans;
-s.header.DIChannelNames;
+% s.sweep_0001.digitalScans;
+% s.header.DIChannelNames;
 
-DI_convert = arrayfun(@(x) bitget(x,8:-1:1,'uint8')', s.sweep_0001.digitalScans, 'UniformOutput',false);
+DI_convert = arrayfun(@(x) bitget(x,8:-1:1,'uint8')', s.(temp_fieldn{temp_idx}).digitalScans, 'UniformOutput',false);
 % bitget(s.sweep_0001.digitalScans(1),8:-1:1,'uint8')
 DI_convert_temp = cat(2,DI_convert{:});
 

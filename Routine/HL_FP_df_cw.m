@@ -26,7 +26,7 @@ params.FP.fitType = 'interp'; % Fit method 'interp' , 'exp' , 'line'
 params.FP.winSize = 20; % Window size for baselining in seconds
 params.FP.winOv = 1; %Window overlap size in seconds
 params.FP.basePrc = 10; % Percentile value from 1 - 100 to use when finding baseline points
-params.FP.ds2 = 200; % downsample to freq, default
+params.FP.ds2 = 100; % downsample to freq, default
 %%
 if nargin < 4
     system_baseline = 0;

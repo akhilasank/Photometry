@@ -39,6 +39,10 @@ function [CtxSti, ThresholdValue]= HL_FP_ParseSti(CtxSti_ch, sr, ThresholdValue,
 num_bits = 12;
 if nargin < 3
     figure;
+    % take care of multile stim channel
+    if size(CtxSti_ch,2) > 1
+        CtxSti_ch = sum(CtxSti_ch,2);
+    end
    plot(unique(CtxSti_ch));
    disp('Click Threshold for detecting artifact, then PRESS ENTER');
    [xi,yi]=getpts;

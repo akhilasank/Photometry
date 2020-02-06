@@ -11,14 +11,22 @@
 %       temporally use for no Bpod DI data
 %
 % Haixin Liu 2019-9
-
+% HL 2019-11 
+% need to modify to work for 2 chan stim. paradigm
 %%
 function [FP_clean, Thred, n_trial] = HL_FP_CleanStiArtiFact(FP,Sti,sr, Thred)
+% for clean FP, exclude STIM artifacts, use Sti channel
+% here can handle several Stim channels
+% sum the two channels
+if size(Sti, 2) > 1
+    Sti = sum(Sti,2);
+end
 
 % stimulus can be TTL trigger or MOD analog signal
 % make the threshold ? 
 % now use a response of GUI
 % if not provided
+
 if nargin < 4
    figure;
    plot(unique(Sti));
@@ -29,7 +37,7 @@ if nargin < 4
    close
 end
 % some parameters used 
-exclude_leeway = 0.006; % s
+exclude_leeway = 0.006; % s 
 disp(['exclude s around stimulation (half on each end) ',num2str(exclude_leeway)]);
 % there is a responding time for LED (laser probably the same or worse)=>
 % extend the excluding window

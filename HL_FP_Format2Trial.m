@@ -15,7 +15,7 @@ function [Trial_FP, FP_x_plot] = HL_FP_Format2Trial(df_F_ds, ts_ds, Stim_ts, FP_
 if nargin < 4
 FP_trial_window_length = 6;
 FP_trial_window_start = -4;
-elseif nargin >=4 && nargin < 6
+elseif nargin ~= 5
     help HL_FP_Format2Trial
     error('Input number not match criteria')
 end

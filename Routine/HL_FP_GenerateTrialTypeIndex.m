@@ -10,6 +10,12 @@
 
 function [trial_label, trial_type, idx] = HL_FP_GenerateTrialTypeIndex(n_trial, trial)
 
+if nargin < 2
+    % just n_trial, make the same type for all
+    trial_label = 1;
+    trial_type{1} = 'One';
+    idx.(trial_type{1}) = 1:n_trial;
+else
 % fix names to put into a structure 
 for ii = 1:length(trial.type)
     if any(strfind(trial.type{ii}, '-'))
@@ -30,4 +36,4 @@ for ii = 1:length(trial_type)
     end
     idx.(trial_type{ii}) = find(trial_label==ii);
 end
-    
+end    

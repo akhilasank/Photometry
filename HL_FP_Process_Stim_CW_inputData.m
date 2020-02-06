@@ -46,18 +46,21 @@ end
 
 fprintf(2,'Channel name used:\nFP ch: %s; Stim ch:%s\n', FP_ch_name,Stim_ch_name);
 
-%{
+idx_Cstim_ch = find(cellfun(@(x) contains(x,Stim_ch_name), ses_data.ch_names));
+idx_FP_ch = find(cellfun(@(x) contains(x,FP_ch_name), ses_data.ch_names));
+
 %% load and parse data
-ses_data = HL_FP_loadWS_parseData(ses_fn);
+% ses_data = HL_FP_loadWS_parseData(ses_fn);
 % [DATA] = HL_FP_loadWS_parseData(fn) HL_loadWS_parseData_Csti_FP1ch
-if ~strcmp(baseline_fn, ' ')  && any(strfind(baseline_fn, '.h5'))
-    baseline_ses_data = HL_FP_loadWS_parseData(baseline_fn);
+if ischar(auto_baseline) % if is a file name
+if ~strcmp(auto_baseline, ' ')  && any(strfind(auto_baseline, '.h5'))
+    baseline_ses_data = HL_FP_loadWS_parseData(auto_baseline);
 else
-    fprintf('baselie file name: %s\nUse 0 as baseline value\n', baseline_fn);
+    fprintf('baselie file name: %s\nUse 0 as baseline value\n', auto_baseline);
     baseline_ses_data = [];%load();
 end
 % process them
-idx_FP_ch = find(cellfun(@(x) contains(x,FP_ch_name), ses_data.ch_names));
+% idx_FP_ch = find(cellfun(@(x) contains(x,FP_ch_name), ses_data.ch_names));
 if isempty(baseline_ses_data)
     auto_baseline = 0;
     sys_noise_est = NaN;
@@ -65,14 +68,17 @@ else
     auto_baseline= nanmedian(baseline_ses_data.ch_data(:,idx_FP_ch));
     sys_noise_est = nanstd(baseline_ses_data.ch_data(:,idx_FP_ch));
 end
+else % input is a number
+    
+    
+end
 [WS_trial, ~, ~] = HL_FP_parseWSStiLib(ses_data.StiLib); % HL_WS_parseStiLib
 disp('Ch names');disp(ses_data.ch_names);
-idx_Cstim_ch = find(cellfun(@(x) contains(x,Stim_ch_name), ses_data.ch_names));
+% idx_Cstim_ch = find(cellfun(@(x) contains(x,Stim_ch_name), ses_data.ch_names));
 %     idx_Bitcode_ch = find(cellfun(@(x) contains(x,'Bitcode'), ses_data.ch_names));
-%}
-idx_Cstim_ch = find(cellfun(@(x) contains(x,Stim_ch_name), ses_data.ch_names));
-idx_FP_ch = find(cellfun(@(x) contains(x,FP_ch_name), ses_data.ch_names));
-
+%% 
+% need to add in component to select multiple channels and the revise the
+% HL_FP_CleanStiArtiFact.m function to make clean FP
 if isfield (ses_data, 'WS_Stim_Thred')
 [FP_clean, Thred, n_trial] = HL_FP_CleanStiArtiFact(ses_data.ch_data(:,idx_FP_ch),ses_data.ch_data(:,idx_Cstim_ch),ses_data.sr, ses_data.WS_Stim_Thred); % HL_cleanFP_StiArtiF
 else

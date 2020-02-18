@@ -71,6 +71,10 @@ end
 % [finalData, flagMatrix] = unwrapBeh(rawData);
 % a smooth measure of number of periods (usually, wheel rotations) in the signal
 
+% Note:
+% theoretically speaking it should be  <  0.4 * newsamplingrate
+% Filtering before downsampling is required to avoid digital aliasing
+
 wheel = downsampleTLab(wheel,dsRate/(Fs/1000),2); % binning and mean 'downsample' to desired freq
 
 distance = wheel*circum; %distance on the 

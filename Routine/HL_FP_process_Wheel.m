@@ -82,12 +82,17 @@ vel = getVel(distance', Fs/(dsRate/(Fs/1000)), winSize); % moving window mean an
 
     minRest = params.beh.minRestTime * Fs/(dsRate/(Fs/1000));
     minRun = params.beh.minRunTime * Fs/(dsRate/(Fs/1000));
-onsets = [];
-offsets = [];
-% [onsets,offsets] = getOnsetOffset(abs(vel),velThres,minRest,minRun,finalOnset);
-
+% onsets = [];
+% offsets = [];
+try
+    [onsets,offsets] = getOnsetOffset(abs(vel),velThres,minRest,minRun,finalOnset);
+catch
+    onsets = NaN; offsets=NaN; disp('error for onset and upset identification')
+end
+% on off matched in number
 return
 %% 
+%{
 figure;
 subplot(4,1,1);
 plot(data);
@@ -114,3 +119,4 @@ plot(vel)
     end        
     data.final(n).beh.onsets = onsets;
     data.final(n).beh.offsets = offsets;
+%}

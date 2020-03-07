@@ -47,7 +47,16 @@ elseif nargin < 5
     winOv = params.FP.winOv;
     basePrc = params.FP.basePrc;   
     dsRate = rawFs/params.FP.ds2; 
-elseif nargin >=5 && nargin < 12
+elseif nargin < 6
+    lpCut = params.FP.lpCut; % Cut-off frequency for filter
+    filtOrder = params.FP.filtOrder; % Order of the filter
+    interpType = params.FP.interpType;
+    fitType = params.FP.fitType;
+    winSize = params.FP.winSize;
+    winOv = params.FP.winOv;
+    basePrc = params.FP.basePrc;   
+    dsRate = rawFs/params.FP.ds2; 
+elseif nargin >=6 && nargin < 12
     help HL_FP_df_cw
     error('Not enought input paramters')
 elseif nargin > 11

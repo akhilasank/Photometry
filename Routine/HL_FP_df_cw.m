@@ -59,11 +59,11 @@ elseif nargin < 6
 elseif nargin >=6 && nargin < 12
     help HL_FP_df_cw
     error('Not enought input paramters')
-elseif nargin > 11
+elseif nargin > 12
     help HL_FP_df_cw
     error('too many input paramters')    
 end
-fprintf(2,'Lowpass Filter: %d Hz. downsample to %d Hz. \nOther params:\n',lpCut, rawFs/dsRate);
+fprintf(2,'Lowpass Filter: %d Hz. downsample to %d Hz. \n Default params:\n',lpCut, rawFs/dsRate);
 disp(params.FP)
 %%
 %  filter and calcuate dF/F using method: 

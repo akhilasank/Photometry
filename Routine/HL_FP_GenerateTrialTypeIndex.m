@@ -34,6 +34,9 @@ for ii = 1:length(trial_type)
     if any(strfind(trial_type{ii}, '.'))
         trial_type{ii}(strfind(trial_type{ii}, '.')) = '_';
     end
+    if any(strfind(trial_type{ii}, '@'))
+        trial_type{ii}(strfind(trial_type{ii}, '@')) = 'a';
+    end
     idx.(trial_type{ii}) = find(trial_label==ii);
 end
 end    

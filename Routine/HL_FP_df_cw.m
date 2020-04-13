@@ -14,19 +14,31 @@
 %       F_baseline: estimated baseline, not downsampled
 %       FP_filter: low-pass filtered data, not down sampled
 
+%% default params
+% params.FP.lpCut = 10; % Cut-off frequency for filter
+% params.FP.filtOrder = 10; % Order of the filter
+% params.FP.interpType = 'linear'; % 'linear' 'spline' 
+% params.FP.fitType = 'interp'; % Fit method 'interp' , 'exp' , 'line'
+% params.FP.winSize = 20; % Window size for baselining in seconds
+% params.FP.winOv = 10; %Window overlap size in seconds
+% params.FP.basePrc = 10; % Percentile value from 1 - 100 to use when finding baseline points
+% params.FP.ds2 = 50; % downsample to freq, default
+
 
 %%
 function  [df_F_ds, ts_ds, df_F, F_baseline, FP_filter] = ...
-    HL_FP_df_cw (rawFP, ts, rawFs, system_baseline, lpCut, filtOrder, interpType, fitType, winSize, winOv, basePrc, dsRate)
+    HL_FP_df_cw (rawFP, ts, rawFs, system_baseline, ...
+    lpCut, filtOrder, interpType, fitType, winSize, winOv, basePrc, dsRate)
 %% default params
 params.FP.lpCut = 10; % Cut-off frequency for filter
 params.FP.filtOrder = 10; % Order of the filter
 params.FP.interpType = 'linear'; % 'linear' 'spline' 
 params.FP.fitType = 'interp'; % Fit method 'interp' , 'exp' , 'line'
 params.FP.winSize = 20; % Window size for baselining in seconds
-params.FP.winOv = 1; %Window overlap size in seconds
+params.FP.winOv = 10; %Window overlap size in seconds
 params.FP.basePrc = 10; % Percentile value from 1 - 100 to use when finding baseline points
 params.FP.ds2 = 50; % downsample to freq, default
+disp(params.FP)
 %%
 if nargin < 4
     system_baseline = 0;
@@ -64,7 +76,6 @@ elseif nargin > 12
     error('too many input paramters')    
 end
 fprintf(2,'Lowpass Filter: %d Hz. downsample to %d Hz. \n Default params:\n',lpCut, rawFs/dsRate);
-disp(params.FP)
 %%
 %  filter and calcuate dF/F using method: 
 FP_filter = filterFP(rawFP - system_baseline,rawFs,lpCut,filtOrder,'lowpass');

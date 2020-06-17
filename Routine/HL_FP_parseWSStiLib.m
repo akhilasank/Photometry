@@ -24,10 +24,15 @@ trial.label = [];
 trial.type = {''};
 map_num_used = [];
 % tmpStimLib = crawl_h5_tree('/header/StimulusLibrary/',filename); %Use the innate wavesurfer function
+%%%% Use function 'sub_orgStimLib' on the function input. 
 StimLib = sub_orgStimLib(tmpStimLib);
 % generate the trial type sequence
+%%%% Print the stimulations used which are stored under the variable 'tmpStimLib.SelectedOutputableClassName'.
 fprintf('Stim. used: %s\n',tmpStimLib.SelectedOutputableClassName);
 % display and parse
+%%%% Based on the variable 'tmpStimLib.SelectedOutputableClassName' implement one of the cases. 
+%%%% Case 1: If variable is stimulus sequence (multiple maps), display the sequence (stimuli are labelled as numbers). Identify which map is associated with each element in the sequence and store it. Sort the map names in order. @HaixinLiuNeuro is this correct, i'm a little confused.
+%%%% Case 2: If variable is stimulation map (only one), identify that one. 
 switch tmpStimLib.SelectedOutputableClassName
     case 'ws.StimulusSequence' % display the chosen sequence
         disp(tmpStimLib.Sequences.(['element',num2str(tmpStimLib.SelectedOutputableIndex)]));
